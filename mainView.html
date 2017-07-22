@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Demo 2</title>
+    <script src="d3.js"></script>
+    <style>
+        svg{
+            border: 1px black solid;
+        }
+
+    </style>
+</head>
+<body>
+<p id="one"></p>
+    <svg width="960" height="600"></svg>
+    <script>
+        var body = d3.select("body"),
+            svg = body.select("svg"),
+            height = svg.attr("height"),
+            width = svg.attr("width");
+
+        svg.append("g")
+            .attr("class", "feromons");
+
+        svg.append("g")
+            .attr("class", "ants");
+
+
+        svg.append("g")
+            .attr("class", "blocks");
+
+
+
+        var data2 = [{"id":"ant1", "x":300, "y":100, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]},
+                     {"id":"ant1", "x":200, "y":200, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]},
+                     {"id":"ant1", "x":300, "y":300, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]},
+            {"id":"ant2", "x":300, "y":100, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]},
+            {"id":"ant2", "x":200, "y":200, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]},
+            {"id":"ant2", "x":300, "y":300, "feromons":[[.2,.2,.2],[.2,.4,.2],[.2,.2,.2]]}
+
+
+
+        ];
+        for(y = 0 ; y < height; y = y +20){
+            for(x = 0; x < width; x = x+20){
+                svg.select(".feromons").append("rect")
+                    .attr("id", "c"+x+""+y)
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("height", 20)
+                    .attr("width", 20)
+                    .attr("fill", "white")
+                    .attr("stroke","#E5D2D7")
+                    .attr("stroke-width",1);
+            }
+        }
+        function update(data) {
+            var objAnt = svg.select(".ants").selectAll("#"+data.id)
+                .data([data]);
+
+            var objFeromon = svg.select(".feromens").selectAll()
+
+            objAnt.enter().append("g")
+                    .attr("id",data.id)
+                    .append("rect")
+                    .attr("width", 20)
+                    .attr("height", 20);
+
+            objAnt.select("rect")
+                .transition()
+                .attr("x", function (d) {
+                    return d.x;
+                })
+                .attr("y", function (d) {
+                    return d.y;
+                });
+        }
+
+        d3.interval(function () {
+            update(data2[Math.floor(Math.random()*data2.length)]);
+        },1500);
+        d3.interval(function () {
+            update(data2[Math.floor(Math.random()*data2.length)]);
+        },1500);
+
+    </script>
+
+</body>
+</html>
