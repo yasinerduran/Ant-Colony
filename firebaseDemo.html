@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+</head>
+<body>
+    Humidity : <humidity></humidity><br>
+    Temperature :<temperature></temperature> <br>
+    Clock :<clock></clock> <br>
+
+<script>
+    var h = document.querySelector("humidity");
+    var t = document.querySelector("temperature");
+    var c = document.querySelector("clock");
+
+    var pad = function (x) {
+        return x < 10 ? "0"+ x : x;
+    }
+
+    var showClock = function () {
+        var d = new Date();
+        var h = pad(d.getHours());
+        var m = pad(d.getMinutes());
+        var s = pad(d.getSeconds());
+        c.innerHTML = [h,m,s].join(":");
+    }
+
+    setInterval(showClock,1000);
+    var myRef = new Firebase('https://fir-demo-d6b5e.firebaseio.com/rooms/1');
+    myRef.on('child_changed', function (snapshot) {
+        var data = snapshot.val();
+        console.log(data);
+        alert(data);
+        h.innerHTML = data.humidity;
+        t.innerHTML = data.temperature;
+    })
+</script>
+</body>
+</html>
