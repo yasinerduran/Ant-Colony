@@ -28,14 +28,24 @@
     }
 
     setInterval(showClock,1000);
-    var myRef = new Firebase('https://fir-demo-d6b5e.firebaseio.com/rooms/1');
-    myRef.on('child_changed', function (snapshot) {
+    var myRef = new Firebase('https://fir-demo-d6b5e.firebaseio.com/');
+    var database = Firebase.database();
+    //child_changed sadece degişen datayı getirir. Value ise komple data blogunu getirir.
+    /*myRef.on('value', function (snapshot) {
         var data = snapshot.val();
         console.log(data);
         alert(data);
         h.innerHTML = data.humidity;
         t.innerHTML = data.temperature;
-    })
+    })*/
+
+    database.ref('/rooms/1').once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+        h.innerHTML = snapshot.val().humidity;
+        t.innerHTML = snapshot.val().temperature;
+    });
+
+
 </script>
 </body>
 </html>

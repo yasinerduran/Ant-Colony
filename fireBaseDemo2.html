@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ant Colony Fire Base Demo 2</title>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
+
+</head>
+<body>
+<script>
+
+    var config = {
+        apiKey: "AIzaSyC9GJkk_fldHaUm7lPQHrGxxY5Oay0-Y_c",
+        authDomain: "antcolony-a0a91.firebaseapp.com",
+        databaseURL: "https://antcolony-a0a91.firebaseio.com",
+        projectId: "antcolony-a0a91",
+        storageBucket: "",
+        messagingSenderId: "947712312356"
+    };
+
+    var fireBase = firebase.initializeApp(config,"webPage");
+
+    fireBase.auth().signInAnonymously().catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+    });
+    var user = fireBase.auth().currentUser;
+    console.log(user);
+    //var userId = fireBase.auth().currentUser.uid;
+    //console.log(userId);
+    console.log(fireBase.name);
+    var database = fireBase.database();
+
+    database.ref('/ants/1').set({
+        "x":100,
+        "y":200
+    });
+    database.ref('/ants/2').set({
+        "x":100,
+        "y":200
+    });
+
+    database.ref('/ants/1').on('value', function(snapshot) {
+        var x = snapshot.val().x;
+        console.log("ant1 x:"+x);
+
+        // ...
+    });
+
+    database.ref('/ants/2').on('value', function(snapshot) {
+        var x = snapshot.val().x;
+        console.log("ant2 x:"+x);
+
+        // ...
+    });
+
+
+
+</script>
+</body>
+</html>
